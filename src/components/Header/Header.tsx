@@ -11,11 +11,10 @@ export const Header = () => {
       <div className='navbar-container'>
         <div className='navbar-brand' onClick={scrollToTop}>
           <img src={Logo} alt="Link Vault Logo" className="navbar-logo" />
-          <span className='brand-text'>Link Vault</span>
         </div>
         
         <div className="navbar-info">
-          <span className='tagline'>Personalized Bookmark Manager</span>
+          <span className='tagline'>Personal Bookmark Vault</span>
         </div>
       </div>
     </nav>
