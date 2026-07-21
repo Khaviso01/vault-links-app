@@ -1,4 +1,6 @@
 import Logo from '../../assets/images/vault-link-logo.png'
+import { HugeiconsIcon } from '@hugeicons/react'
+import { AllBookmarkIcon } from '@hugeicons/core-free-icons'
 import './Header.css'
 
 export const Header = () => {
@@ -9,12 +11,13 @@ export const Header = () => {
   return (
     <nav className='navbar'>
       <div className='navbar-container'>
-        <div className='navbar-brand' onClick={scrollToTop}>
+        <div className='navbar-logo' onClick={scrollToTop}>
           <img src={Logo} alt="Link Vault Logo" className="navbar-logo" />
         </div>
-        
+
         <div className="navbar-info">
-          <span className='tagline'>Personal Bookmark Vault</span>
+          <HugeiconsIcon icon={AllBookmarkIcon} />
+          <span className='tag'>Bookmark Vault</span>
         </div>
       </div>
     </nav>

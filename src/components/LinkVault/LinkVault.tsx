@@ -1,5 +1,13 @@
 import React, { useState, useEffect, useCallback } from 'react';
 import { localStorageUtils } from '../../LocalStorage/localStorage';
+import { LinkForm } from '../../components/LinkForm/LinkForm';
+import { LinkCard } from '../../components/LinkCard/LinkCard';
+import { SearchBar } from '../../components/Searchbar/Searchbar';
+import { Notification } from '../../components/Notification/Notification';
+import { HugeiconsIcon } from '@hugeicons/react'
+import { Bookmark02Icon } from '@hugeicons/core-free-icons'
+import { Link01Icon } from '@hugeicons/core-free-icons'
+import './LinkVault.css';
 
 // Define types directly in this component
 interface Link {
@@ -29,11 +37,6 @@ interface NotificationState {
   type: 'success' | 'error' | 'info';
   isVisible: boolean;
 }
-import { LinkForm } from '../../components/LinkForm/LinkForm';
-import { LinkCard } from '../../components/LinkCard/LinkCard';
-import { SearchBar } from '../../components/Searchbar/Searchbar';
-import { Notification } from '../../components/Notification/Notification';
-import './LinkVault.css';
 
 export const LinkVault: React.FC = () => {
   const [links, setLinks] = useState<Link[]>([]);
@@ -186,15 +189,12 @@ export const LinkVault: React.FC = () => {
         <div className="header-content">
           <h1 className="vault-title">
             <span className="vault-icon">
-              <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-                <path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71" />
-                <path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71" />
-              </svg>
+              <HugeiconsIcon icon={Link01Icon} />
             </span>
             Link Vault
           </h1>
           <p className="vault-subtitle">
-            Your personal bookmark manager - save, organize, and access your favorite links from anywhere
+            Your personal bookmark manager - securely save, organize, and access your favorite links from anywhere
           </p>
         </div>
         <button 
@@ -210,7 +210,7 @@ export const LinkVault: React.FC = () => {
         </button>
       </div>
 
-      <SearchBar 
+       <SearchBar 
         onSearch={handleSearch}
         totalLinks={links.length}
         filteredCount={filteredLinks.length}
@@ -222,15 +222,12 @@ export const LinkVault: React.FC = () => {
             {links.length === 0 ? (
               <>
                 <div className="empty-icon">
-                  <svg width="64" height="64" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round">
-                    <path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20" />
-                    <path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z" />
-                  </svg>
+                  <HugeiconsIcon icon={Bookmark02Icon} />
                 </div>
                 <h3>No links saved yet</h3>
-                <p>Start building your link collection by adding your first bookmark!</p>
+                <p>Get started with adding first bookmark!</p>
                 <button className="empty-action-btn" onClick={openAddForm}>
-                  Add Your First Link
+                  Save Your First Link!
                 </button>
               </>
             ) : (
@@ -274,5 +271,6 @@ export const LinkVault: React.FC = () => {
         onClose={hideNotification}
       />
     </div>
+
   );
 };

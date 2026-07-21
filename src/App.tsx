@@ -1,7 +1,7 @@
 
 import { Header } from './components/Header/Header'
 import './App.css'
-//import { LinkVault } from './components/LinkVault/LinkVault'
+import { LinkVault } from './components/LinkVault/LinkVault'
 
 function App() {
 
@@ -10,7 +10,7 @@ function App() {
      <Header/>
      <main className="app-main">
      </main>
-     {/*<LinkVault/>*/}
+     <LinkVault/>
     </div>
   )
 }
