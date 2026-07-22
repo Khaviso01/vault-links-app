@@ -1,13 +1,5 @@
-import React, { useState, useEffect, useCallback } from 'react';
+import React, { useState, useEffect, useCallback, useMemo } from 'react';
 import { localStorageUtils } from '../../LocalStorage/localStorage';
-import { LinkForm } from '../../components/LinkForm/LinkForm';
-import { LinkCard } from '../../components/LinkCard/LinkCard';
-import { SearchBar } from '../../components/Searchbar/Searchbar';
-import { Notification } from '../../components/Notification/Notification';
-import { HugeiconsIcon } from '@hugeicons/react'
-import { Bookmark02Icon } from '@hugeicons/core-free-icons'
-import { Link01Icon } from '@hugeicons/core-free-icons'
-import './LinkVault.css';
 
 // Define types directly in this component
 interface Link {
@@ -37,10 +29,17 @@ interface NotificationState {
   type: 'success' | 'error' | 'info';
   isVisible: boolean;
 }
+import { LinkForm } from '../../components/LinkForm/LinkForm';
+import { LinkCard } from '../../components/LinkCard/LinkCard';
+import { SearchBar } from '../../components/Searchbar/Searchbar';
+import { TagTabs } from '../../components/TagTabs/TagTabs';
+import { Notification } from '../../components/Notification/Notification';
+import './LinkVault.css';
 
 export const LinkVault: React.FC = () => {
   const [links, setLinks] = useState<Link[]>([]);
-  const [filteredLinks, setFilteredLinks] = useState<Link[]>([]);
+  const [searchFilters, setSearchFilters] = useState<SearchFilters>({ query: '', searchBy: 'all' });
+  const [activeTag, setActiveTag] = useState<string>('All');
   const [isFormOpen, setIsFormOpen] = useState(false);
   const [editingLink, setEditingLink] = useState<Link | null>(null);
   const [isLoading, setIsLoading] = useState(false);
@@ -54,7 +53,6 @@ export const LinkVault: React.FC = () => {
   useEffect(() => {
     const savedLinks = localStorageUtils.getLinks();
     setLinks(savedLinks);
-    setFilteredLinks(savedLinks);
   }, []);
 
   // Show notification helper
@@ -67,16 +65,53 @@ export const LinkVault: React.FC = () => {
     setNotification(prev => ({ ...prev, isVisible: false }));
   }, []);
 
-  // Handle search
+  // Handle search — just stores the current filter criteria; actual
+  // filtering happens in the `filteredLinks` memo below.
   const handleSearch = useCallback((filters: SearchFilters) => {
-    if (!filters.query.trim()) {
-      setFilteredLinks(links);
-      return;
+    setSearchFilters(filters);
+  }, []);
+
+  // Unique tags across all links, used to render the tabs
+  const uniqueTags = useMemo(() => {
+    const tagSet = new Set<string>();
+    links.forEach(link => link.tags.forEach(tag => tagSet.add(tag)));
+    return Array.from(tagSet).sort((a, b) => a.localeCompare(b));
+  }, [links]);
+
+  // Combined result of the active tag filter + the search filter,
+  // recomputed from `links` whenever either changes.
+  const filteredLinks = useMemo(() => {
+    let result = links;
+
+    if (activeTag !== 'All') {
+      result = result.filter(link => link.tags.includes(activeTag));
     }
 
-    const results = localStorageUtils.searchLinks(filters.query, filters.searchBy);
-    setFilteredLinks(results);
-  }, [links]);
+    const term = searchFilters.query.trim().toLowerCase();
+    if (term) {
+      result = result.filter(link => {
+        switch (searchFilters.searchBy) {
+          case 'title':
+            return link.title.toLowerCase().includes(term);
+          case 'url':
+            return link.url.toLowerCase().includes(term);
+          case 'description':
+            return link.description.toLowerCase().includes(term);
+          case 'tags':
+            return link.tags.some(tag => tag.toLowerCase().includes(term));
+          default:
+            return (
+              link.title.toLowerCase().includes(term) ||
+              link.url.toLowerCase().includes(term) ||
+              link.description.toLowerCase().includes(term) ||
+              link.tags.some(tag => tag.toLowerCase().includes(term))
+            );
+        }
+      });
+    }
+
+    return result;
+  }, [links, activeTag, searchFilters]);
 
   // Handle adding new link
   const handleAddLink = async (formData: LinkFormData) => {
@@ -92,10 +127,8 @@ export const LinkVault: React.FC = () => {
           .filter(tag => tag.length > 0)
       };
 
-      localStorageUtils.addLink(linkData);
-      const updatedLinks = localStorageUtils.getLinks();
-      setLinks(updatedLinks);
-      setFilteredLinks(updatedLinks);
+      const newLink = localStorageUtils.addLink(linkData);
+      setLinks(prev => [...prev, newLink]);
       setIsFormOpen(false);
       showNotification('Link added successfully!', 'success');
     } catch (error) {
@@ -123,9 +156,7 @@ export const LinkVault: React.FC = () => {
 
       const updatedLink = localStorageUtils.updateLink(editingLink.id, updates);
       if (updatedLink) {
-        const updatedLinks = localStorageUtils.getLinks();
-        setLinks(updatedLinks);
-        setFilteredLinks(updatedLinks);
+        setLinks(prev => prev.map(l => (l.id === updatedLink.id ? updatedLink : l)));
         setIsFormOpen(false);
         setEditingLink(null);
         showNotification('Link updated successfully!', 'success');
@@ -144,9 +175,7 @@ export const LinkVault: React.FC = () => {
     try {
       const success = localStorageUtils.deleteLink(id);
       if (success) {
-        const updatedLinks = localStorageUtils.getLinks();
-        setLinks(updatedLinks);
-        setFilteredLinks(updatedLinks);
+        setLinks(prev => prev.filter(l => l.id !== id));
         showNotification('Link deleted successfully!', 'success');
       } else {
         showNotification('Failed to delete link. Link not found.', 'error');
@@ -189,12 +218,15 @@ export const LinkVault: React.FC = () => {
         <div className="header-content">
           <h1 className="vault-title">
             <span className="vault-icon">
-              <HugeiconsIcon icon={Link01Icon} />
+              <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                <path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71" />
+                <path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71" />
+              </svg>
             </span>
             Link Vault
           </h1>
           <p className="vault-subtitle">
-            Your personal bookmark manager - securely save, organize, and access your favorite links from anywhere
+            Your personal bookmark manager - save, organize, and access your favorite links from anywhere
           </p>
         </div>
         <button 
@@ -210,7 +242,15 @@ export const LinkVault: React.FC = () => {
         </button>
       </div>
 
-       <SearchBar 
+      {uniqueTags.length > 0 && (
+        <TagTabs
+          tags={uniqueTags}
+          activeTag={activeTag}
+          onSelect={setActiveTag}
+        />
+      )}
+
+      <SearchBar 
         onSearch={handleSearch}
         totalLinks={links.length}
         filteredCount={filteredLinks.length}
@@ -222,12 +262,15 @@ export const LinkVault: React.FC = () => {
             {links.length === 0 ? (
               <>
                 <div className="empty-icon">
-                  <HugeiconsIcon icon={Bookmark02Icon} />
+                  <svg width="64" height="64" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round">
+                    <path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20" />
+                    <path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z" />
+                  </svg>
                 </div>
                 <h3>No links saved yet</h3>
-                <p>Get started with adding first bookmark!</p>
+                <p>Start building your link collection by adding your first bookmark!</p>
                 <button className="empty-action-btn" onClick={openAddForm}>
-                  Save Your First Link!
+                  Add Your First Link
                 </button>
               </>
             ) : (
@@ -271,6 +314,5 @@ export const LinkVault: React.FC = () => {
         onClose={hideNotification}
       />
     </div>
-
   );
 };

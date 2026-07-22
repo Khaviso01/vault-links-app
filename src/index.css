@@ -1,6 +1,7 @@
 :root {
   /* Modern Color Palette */
   --color-primary: #257eeb;
+  --color-secondary: #000000;
   --color-primary-hover: #1d4ed8;
   --color-primary-light: #3b82f6;
   --color-primary-bg: #eff6ff;
@@ -14,8 +15,8 @@
   --color-text-secondary: #111827;
   --color-text-tertiary: #555656;
   
-  --color-bg-primary: #ced0ce;
-  --color-bg-secondary: #ced0ce;
+  --color-bg-primary: #e7e7e729;
+  --color-bg-secondary: #fff;
   
   --color-border: #919192;
   --color-border-hover: #d1d5db;
@@ -30,7 +31,7 @@
   --radius-lg: 12px;
   --radius-xl: 16px;
   
-  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen', 'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue', sans-serif;
+  font-family: 'geist', sans-serif;
   line-height: 1.6;
   font-weight: 400;
   
@@ -53,7 +54,7 @@ body {
   padding: 0;
   min-width: 320px;
   min-height: 100vh;
-  background: var(--color-bg-secondary);
+  background: var(--color-bg-primary);
   color: var(--color-text-primary);
   line-height: 1.6;
 }

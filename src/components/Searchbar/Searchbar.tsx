@@ -3,7 +3,7 @@ import { Search01Icon } from '@hugeicons/core-free-icons'
 import { HugeiconsIcon } from '@hugeicons/react'
 import './Searchbar.css';
 
-// Define SearchFilters type directly in this component
+// Defining SearchFilters type
 interface SearchFilters {
   query: string;
   searchBy: 'all' | 'title' | 'url' | 'description' | 'tags';
@@ -48,7 +48,7 @@ export const SearchBar: React.FC<SearchBarProps> = ({
           </div>
           <input
             type="text"
-            placeholder="Search your links by title, tags, link or description"
+            placeholder="Search your links by title, tags, or description"
             value={query}
             onChange={(e) => setQuery(e.target.value)}
             className="search-input"
@@ -78,7 +78,7 @@ export const SearchBar: React.FC<SearchBarProps> = ({
             {filteredCount === 0 ? 'No links found' : 
              filteredCount === 1 ? '1 link found' : 
              `${filteredCount} links found`}
-            {totalLinks > 0 && ` out of ${totalLinks} total`}
+            {totalLinks > 0 && ` out of ${totalLinks} total links`}
           </span>
         ) : (
           <span className="total-count">

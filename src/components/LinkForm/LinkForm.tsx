@@ -12,12 +12,14 @@ interface Link {
   updatedAt: Date;
 }
 
+//Defining input populations
 interface LinkFormData {
   title: string;
   url: string;
   description: string;
   tags: string;
 }
+
 
 interface LinkFormProps {
   onSubmit: (data: LinkFormData) => void;
@@ -185,10 +187,10 @@ export const LinkForm: React.FC<LinkFormProps> = ({
               name="tags"
               value={formData.tags}
               onChange={handleInputChange}
-              placeholder="Enter tags separated by commas (e.g., react, javascript, tutorial)"
+              placeholder="Enter tags separated by commas (e.g., academics, react, music)"
               disabled={isLoading}
             />
-            <small className="form-hint">Separate multiple tags with commas</small>
+            <small className="form-hint">note* seperate tags by commas</small>
           </div>
 
           <div className="form-actions">
