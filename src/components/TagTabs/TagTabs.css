@@ -4,11 +4,11 @@
   gap: 2px;
   padding: 4px;
   margin-bottom: 1.25rem;
-  background-color: var(--color-bg-tertiary);
   border-radius: var(--radius-lg);
   max-width: 100%;
   overflow-x: auto;
   scrollbar-width: none;
+  background: var(--color-bg-primary);
 }
 
 .tag-tabs::-webkit-scrollbar {
@@ -16,9 +16,9 @@
 }
 
 .tag-tab {
+  background-color: var(--color-bg-tertiary);
   flex-shrink: 0;
   border: none;
-  background: transparent;
   color: var(--color-text-secondary);
   font-family: inherit;
   font-size: 0.875rem;
@@ -31,7 +31,7 @@
 }
 
 .tag-tab:hover:not(.tag-tab-active) {
-  color: var(--color-text-primary);
+  color:var(--color-text-tertiary);
 }
 
 .tag-tab-active {
