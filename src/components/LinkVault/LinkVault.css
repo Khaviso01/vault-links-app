@@ -157,29 +157,6 @@
   line-height: 1.6;
 }
 
-.empty-action-btn {
-  padding: 0.875rem 2rem;
-  background: var(--color-secondary);
-  color: white;
-  border: none;
-  border-radius: var(--radius-md);
-  font-size: 1rem;
-  font-weight: 600;
-  cursor: pointer;
-  transition: all 0.2s ease;
-  box-shadow: var(--shadow-md);
-}
-
-.empty-action-btn:hover {
-  background: var(--color-primary-hover);
-  box-shadow: var(--shadow-lg);
-  transform: translateY(-1px);
-}
-
-.empty-action-btn:active {
-  transform: translateY(0);
-}
-
 /* Responsive Design */
 @media (max-width: 1200px) {
   .links-grid {

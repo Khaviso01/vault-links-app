@@ -267,9 +267,7 @@ export const LinkVault: React.FC = () => {
                 </div>
                 <h3>No links bookmarked yet!</h3>
                 <p>Start building your link collection by adding your first bookmark</p>
-                <button className="empty-action-btn" onClick={openAddForm}>
-                  Add Your First Link
-                </button>
+
               </>
             ) : (
               <>
