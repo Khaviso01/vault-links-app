@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import './LinkForm.css';
 
 // Define types directly in this component
+// Defining output populations types
 interface Link {
   id: string;
   title: string;
@@ -12,7 +13,7 @@ interface Link {
   updatedAt: Date;
 }
 
-//Defining input populations
+//Defining input populations types
 interface LinkFormData {
   title: string;
   url: string;
