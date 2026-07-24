@@ -9,7 +9,7 @@ import { HugeiconsIcon } from '@hugeicons/react'
 import { Bookmark02Icon } from '@hugeicons/core-free-icons'
 import { FolderLinksIcon } from '@hugeicons/core-free-icons'
 
- 
+
 import './LinkVault.css';
 
 // Define types directly in this component
@@ -145,7 +145,7 @@ export const LinkVault: React.FC = () => {
   // Handle editing link
   const handleEditLink = async (formData: LinkFormData) => {
     if (!editingLink) return;
-    
+
     setIsLoading(true);
     try {
       const updates = {
@@ -230,7 +230,7 @@ export const LinkVault: React.FC = () => {
             Your personal bookmark manager - save, organize, and access your favorite links from anywhere
           </p>
         </div>
-        <button 
+        <button
           className="add-link-btn"
           onClick={openAddForm}
           disabled={isLoading}
@@ -251,7 +251,7 @@ export const LinkVault: React.FC = () => {
         />
       )}
 
-      <SearchBar 
+      <SearchBar
         onSearch={handleSearch}
         totalLinks={links.length}
         filteredCount={filteredLinks.length}

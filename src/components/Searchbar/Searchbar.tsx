@@ -78,7 +78,7 @@ export const SearchBar: React.FC<SearchBarProps> = ({
             {filteredCount === 0 ? 'No links found' : 
              filteredCount === 1 ? '1 link found' : 
              `${filteredCount} links found`}
-            {totalLinks > 0 && ` out of ${totalLinks} total links`}
+            {totalLinks > 0 && ` out of ${totalLinks} links saved`}
           </span>
         ) : (
           <span className="total-count">
