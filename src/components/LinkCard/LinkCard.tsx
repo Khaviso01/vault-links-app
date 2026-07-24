@@ -31,18 +31,6 @@ export const LinkCard: React.FC<LinkCardProps> = ({ link, onEdit, onDelete }) =>
     window.open(url, '_blank', 'noopener,noreferrer');
   };
 
-
-  // Date format after CRUD process
-  const formatDate = (date: Date) => {
-    return new Intl.DateTimeFormat('en-US', {
-      year: 'numeric',
-      month: 'short',
-      day: 'numeric',
-      hour: '2-digit',
-      minute: '2-digit'
-    }).format(date);
-  };
-
   const getDomainFromUrl = (url: string) => {
     try {
       const urlObj = new URL(url.startsWith('http') ? url : `https://${url}`);
@@ -103,15 +91,6 @@ export const LinkCard: React.FC<LinkCardProps> = ({ link, onEdit, onDelete }) =>
           ))}
         </div>
       )}
-
-      <div className="link-meta">
-        <div className="link-dates">
-          <span className="created-date">Created: {formatDate(link.createdAt)}</span>
-          {link.updatedAt.getTime() !== link.createdAt.getTime() && (
-            <span className="updated-date">Updated: {formatDate(link.updatedAt)}</span>
-          )}
-        </div>
-      </div>
     </div>
   );
 };
