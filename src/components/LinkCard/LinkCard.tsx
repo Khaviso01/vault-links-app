@@ -1,12 +1,11 @@
 import React from 'react'
 import './LinkCard.css'
 import { HugeiconsIcon } from '@hugeicons/react'
-import { Edit02Icon } from '@hugeicons/core-free-icons'
-import { Delete02Icon } from '@hugeicons/core-free-icons'
 import { ExternalLinkIcon } from '@hugeicons/core-free-icons'
+import { TagsIcon } from '@hugeicons/core-free-icons'
 
 
-// Define Link type directly in this component
+// Define Link type
 interface Link {
   id: string;
   title: string;
@@ -61,29 +60,28 @@ export const LinkCard: React.FC<LinkCardProps> = ({ link, onEdit, onDelete }) =>
             <span className="domain">{getDomainFromUrl(link.url)}</span>
             <HugeiconsIcon icon={ExternalLinkIcon} size={20} />
           </div>
+          <p className="link-description">{link.description}</p>
         </div>
         <div className="link-actions">
-          <button
-            className="action-btn edit-btn"
-            onClick={handleEditClick}
-            title="Edit link"
-          >
-            <HugeiconsIcon icon={Edit02Icon} size={20} />
-          </button>
           <button
             className="action-btn delete-btn"
             onClick={handleDeleteClick}
             title="Delete link"
           >
-            <HugeiconsIcon icon={Delete02Icon} size={20} />
+            Delete
+          </button>
+          <button
+            className="action-btn edit-btn"
+            onClick={handleEditClick}
+            title="Edit link"
+          >
+            Edit
           </button>
         </div>
       </div>
-
-      <p className="link-description">{link.description}</p>
-
       {link.tags.length > 0 && (
         <div className="link-tags">
+          <HugeiconsIcon icon={TagsIcon} />
           {link.tags.map((tag, index) => (
             <span key={index} className="tag">
               #{tag.trim()}

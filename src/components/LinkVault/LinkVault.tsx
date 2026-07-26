@@ -8,8 +8,6 @@ import { Notification } from '../../components/Notification/Notification';
 import { HugeiconsIcon } from '@hugeicons/react'
 import { Bookmark02Icon } from '@hugeicons/core-free-icons'
 import { FolderLinksIcon } from '@hugeicons/core-free-icons'
-
-
 import './LinkVault.css';
 
 // Define types directly in this component
