@@ -188,7 +188,7 @@ export const LinkForm: React.FC<LinkFormProps> = ({
               name="tags"
               value={formData.tags}
               onChange={handleInputChange}
-              placeholder="Enter tags separated by commas (e.g., academics, react, music)"
+              placeholder="(e.g., tutorial, react, music)"
               disabled={isLoading}
             />
             <small className="form-hint">note* seperate tags by commas</small>
