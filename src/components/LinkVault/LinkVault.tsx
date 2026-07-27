@@ -263,7 +263,7 @@ export const LinkVault: React.FC = () => {
                 <div className="empty-icon">
                   <HugeiconsIcon icon={Bookmark02Icon} />
                 </div>
-                <h3>No links bookmarked yet!</h3>
+                <h3>Welcome to your bookmark vault!</h3>
                 <p>Start building your link collection by adding your first bookmark</p>
 
               </>
