@@ -2,12 +2,12 @@ import React, { useState, useEffect, useCallback, useMemo } from 'react';
 import { localStorageUtils } from '../../LocalStorage/localStorage';
 import { LinkForm } from '../../components/LinkForm/LinkForm';
 import { LinkCard } from '../../components/LinkCard/LinkCard';
-import { SearchBar } from '../../components/Searchbar/Searchbar';
 import { TagTabs } from '../../components/TagTabs/TagTabs';
 import { Notification } from '../../components/Notification/Notification';
 import { HugeiconsIcon } from '@hugeicons/react'
 import { Bookmark02Icon } from '@hugeicons/core-free-icons'
 import { FolderLinksIcon } from '@hugeicons/core-free-icons'
+import { Search01Icon } from '@hugeicons/core-free-icons'
 import './LinkVault.css';
 
 // Define types directly in this component
@@ -187,6 +187,19 @@ export const LinkVault: React.FC = () => {
     }
   };
 
+  const [query, setQuery] = useState('');
+
+  useEffect(() => {
+    handleSearch({
+      query,
+      searchBy: 'all',
+    });
+  }, [query, handleSearch]);
+
+  const handleClearSearch = () => {
+    setQuery('');
+  };
+
   // Open form for adding new link
   const openAddForm = () => {
     setEditingLink(null);
@@ -224,22 +237,51 @@ export const LinkVault: React.FC = () => {
             </span>
             Link Vault
           </h1>
-          <p className="vault-subtitle">
-            Your personal bookmark manager - save, organize, and access your favorite links from anywhere
-          </p>
         </div>
-        <button
-          className="add-link-btn"
-          onClick={openAddForm}
-          disabled={isLoading}
-        >
-          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
-            <line x1="12" y1="5" x2="12" y2="19" />
-            <line x1="5" y1="12" x2="19" y2="12" />
-          </svg>
-          Add New Link
-        </button>
+        <div className='header-actions'>
+          <div className="search-bar">
+            <div className="search-input-container">
+              <div className="search-icon">
+                <HugeiconsIcon icon={Search01Icon} />
+              </div>
+              <input
+                type="text"
+                placeholder="Search bookmarks"
+                value={query}
+                onChange={(e) => setQuery(e.target.value)}
+                className="search-input"
+              />
+              {query && (
+                <button
+                  className="clear-search-btn"
+                  onClick={handleClearSearch}
+                  title="Clear search"
+                >
+                  <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
+                    <line x1="18" y1="6" x2="6" y2="18" />
+                    <line x1="6" y1="6" x2="18" y2="18" />
+                  </svg>
+                </button>
+              )}
+            </div>
+          </div>
+          <button
+            className="add-link-btn"
+            onClick={openAddForm}
+            disabled={isLoading}
+          >
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
+              <line x1="12" y1="5" x2="12" y2="19" />
+              <line x1="5" y1="12" x2="19" y2="12" />
+            </svg>
+            Add New Link
+          </button>
+        </div>
       </div>
+
+      <p className="vault-subtitle">
+        Save, organize, and access your favorite links from anywhere
+      </p>
 
       {uniqueTags.length > 0 && (
         <TagTabs
@@ -248,12 +290,6 @@ export const LinkVault: React.FC = () => {
           onSelect={setActiveTag}
         />
       )}
-
-      <SearchBar
-        onSearch={handleSearch}
-        totalLinks={links.length}
-        filteredCount={filteredLinks.length}
-      />
 
       <div className="links-container">
         {filteredLinks.length === 0 ? (

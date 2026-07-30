@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useState } from 'react';
 import './LinkCard.css'
 import { HugeiconsIcon } from '@hugeicons/react'
 import { ExternalLinkIcon } from '@hugeicons/core-free-icons'
@@ -51,6 +51,8 @@ export const LinkCard: React.FC<LinkCardProps> = ({ link, onEdit, onDelete }) =>
     onEdit(link);
   };
 
+  const [showFullDescription, setShowFullDescription] = useState(false);
+
   return (
     <div className="link-card" onClick={handleVisitLink}>
       <div className="link-card-header">
@@ -60,7 +62,28 @@ export const LinkCard: React.FC<LinkCardProps> = ({ link, onEdit, onDelete }) =>
             <span className="domain">{getDomainFromUrl(link.url)}</span>
             <HugeiconsIcon icon={ExternalLinkIcon} size={20} />
           </div>
-          <p className="link-description">{link.description}</p>
+          <div className="description-wrapper">
+            <p
+              className={`link-description ${showFullDescription ? 'expanded' : ''
+                }`}
+              onClick={(e) => {
+                e.stopPropagation();
+                setShowFullDescription(!showFullDescription);
+              }}
+            >
+              {link.description} 
+            </p>
+
+            <button
+              className="show-more-btn"
+              onClick={(e) => {
+                e.stopPropagation();
+                setShowFullDescription(!showFullDescription);
+              }}
+            >
+              {showFullDescription ? 'Show less' : 'Show more'}
+            </button>
+          </div>
         </div>
         <div className="link-actions">
           <button

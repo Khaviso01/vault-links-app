@@ -77,12 +77,6 @@ export const Notification: React.FC<NotificationProps> = ({
           </svg>
         </button>
       </div>
-      <div className="notification-progress">
-        <div 
-          className="notification-progress-bar" 
-          style={{ animationDuration: `${duration}ms` }}
-        />
-      </div>
     </div>
   );
 };

@@ -12,7 +12,6 @@
   box-shadow: var(--shadow-xl);
   overflow: hidden;
   animation: slideInRight 0.3s ease-out;
-  border-left: 4px solid;
   border: 1px solid var(--color-border);
 }
 
@@ -105,34 +104,6 @@
   height: 3px;
   background-color: var(--color-bg-secondary);
   overflow: hidden;
-}
-
-.notification-progress-bar {
-  height: 100%;
-  width: 100%;
-  transform-origin: left;
-  animation: progressBar linear;
-}
-
-.notification-success .notification-progress-bar {
-  background-color: var(--color-success);
-}
-
-.notification-error .notification-progress-bar {
-  background-color: var(--color-error);
-}
-
-.notification-info .notification-progress-bar {
-  background-color: var(--color-info);
-}
-
-@keyframes progressBar {
-  from {
-    transform: scaleX(1);
-  }
-  to {
-    transform: scaleX(0);
-  }
 }
 
 /* Responsive Design */
