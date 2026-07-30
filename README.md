@@ -47,11 +47,9 @@ vault-links-app/
 │   ├── LocalStorage/
 │   │   └── localStorage.ts      # CRUD + persistence logic
 │   └── components/
-│       ├── Header/
 │       ├── LinkVault/           # Main container — owns state & handlers
 │       ├── LinkForm/            # Add/edit modal
 │       ├── LinkCard/            # Individual bookmark card
-│       ├── Searchbar/           # Debounced search input
 │       ├── TagTabs/             # Segmented tag-filter tabs
 │       └── Notification/        # Toast notifications
 ```
@@ -106,7 +104,6 @@ All reads/writes go through a single `localStorageUtils` module, which keeps the
 
 - Expose the field-specific search filter (title/URL/description/tags) in the UI
 - Make tags on each `LinkCard` clickable to jump straight to that filter
-- Swap `localStorage` for a real backend so links sync across devices
 - Add automated tests (Vitest + React Testing Library)
 
 ---
@@ -114,3 +111,7 @@ All reads/writes go through a single `localStorageUtils` module, which keeps the
 ## License
 
 This project was built as part of a training task and is intended for educational/demo purposes.
+
+## Author
+
+Khaviso Vukeya
