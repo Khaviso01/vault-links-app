@@ -6,6 +6,11 @@ A personal bookmark manager built with **React + TypeScript**. Save, organize, s
 
 ---
 
+## App Preview
+<img src="src/assets/vault-link-ui.png" alt="Alt text" width="500">
+
+---
+
 ## Features
 
 - **Full CRUD** — create, view, edit, and delete saved links
