@@ -4,8 +4,6 @@ import { HugeiconsIcon } from '@hugeicons/react'
 import { ExternalLinkIcon } from '@hugeicons/core-free-icons'
 import { TagsIcon } from '@hugeicons/core-free-icons'
 
-
-// Define Link type
 interface Link {
   id: string;
   title: string;
@@ -23,13 +21,13 @@ interface LinkCardProps {
 }
 
 export const LinkCard: React.FC<LinkCardProps> = ({ link, onEdit, onDelete }) => {
+  // Navigate the user's browser to the link URL in a new tab
   const handleVisitLink = () => {
-
-    // Ensuring URL has protocol
     const url = link.url.startsWith('http') ? link.url : `https://${link.url}`;
     window.open(url, '_blank', 'noopener,noreferrer');
   };
 
+  // Extract a friendly hostname from the URL for display
   const getDomainFromUrl = (url: string) => {
     try {
       const urlObj = new URL(url.startsWith('http') ? url : `https://${url}`);
@@ -39,6 +37,7 @@ export const LinkCard: React.FC<LinkCardProps> = ({ link, onEdit, onDelete }) =>
     }
   };
 
+  // Prevent the card click from also triggering when deleting
   const handleDeleteClick = (e: React.MouseEvent) => {
     e.stopPropagation();
     if (window.confirm('Are you sure you want to delete this link?')) {
@@ -46,11 +45,13 @@ export const LinkCard: React.FC<LinkCardProps> = ({ link, onEdit, onDelete }) =>
     }
   };
 
+  // Prevent the card click from also triggering when editing
   const handleEditClick = (e: React.MouseEvent) => {
     e.stopPropagation();
     onEdit(link);
   };
 
+  // Toggle whether the full description is shown
   const [showFullDescription, setShowFullDescription] = useState(false);
 
   return (
@@ -63,15 +64,15 @@ export const LinkCard: React.FC<LinkCardProps> = ({ link, onEdit, onDelete }) =>
             <HugeiconsIcon icon={ExternalLinkIcon} size={20} />
           </div>
           <div className="description-wrapper">
+            {/* Clicking the description toggles expanded/collapsed state. */}
             <p
-              className={`link-description ${showFullDescription ? 'expanded' : ''
-                }`}
+              className={`link-description ${showFullDescription ? 'expanded' : ''}`}
               onClick={(e) => {
                 e.stopPropagation();
                 setShowFullDescription(!showFullDescription);
               }}
             >
-              {link.description} 
+              {link.description}
             </p>
 
             <button
