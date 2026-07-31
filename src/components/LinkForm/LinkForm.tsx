@@ -1,8 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import './LinkForm.css';
 
-// Define types directly in this component
-// Defining output populations types
+// Link shape used for editing existing entries.
 interface Link {
   id: string;
   title: string;
@@ -13,7 +12,7 @@ interface Link {
   updatedAt: Date;
 }
 
-//Defining input populations types
+// Form input values managed by this component.
 interface LinkFormData {
   title: string;
   url: string;
@@ -21,7 +20,7 @@ interface LinkFormData {
   tags: string;
 }
 
-
+// Props accepted by the LinkForm component.
 interface LinkFormProps {
   onSubmit: (data: LinkFormData) => void;
   onCancel: () => void;
@@ -35,6 +34,7 @@ export const LinkForm: React.FC<LinkFormProps> = ({
   editingLink,
   isLoading = false
 }) => {
+  // Form values for title, URL, description, and comma-separated tags
   const [formData, setFormData] = useState<LinkFormData>({
     title: '',
     url: '',
@@ -42,8 +42,10 @@ export const LinkForm: React.FC<LinkFormProps> = ({
     tags: ''
   });
 
+  // Per-field validation errors shown to the user
   const [errors, setErrors] = useState<Partial<LinkFormData>>({});
 
+  // Populate form fields when editing an existing link
   useEffect(() => {
     if (editingLink) {
       setFormData({
@@ -63,6 +65,7 @@ export const LinkForm: React.FC<LinkFormProps> = ({
     setErrors({});
   }, [editingLink]);
 
+  // Validate form fields and return whether the current input is valid
   const validateForm = (): boolean => {
     const newErrors: Partial<LinkFormData> = {};
 
@@ -73,7 +76,7 @@ export const LinkForm: React.FC<LinkFormProps> = ({
     if (!formData.url.trim()) {
       newErrors.url = 'URL is required';
     } else {
-      // Basic URL validation
+      // Basic URL validation to ensure the value resembles a URL
       const urlPattern = /^(https?:\/\/)?(www\.)?[a-zA-Z0-9-]+(\.[a-zA-Z]{2,})+(\/.*)?$/;
       if (!urlPattern.test(formData.url)) {
         newErrors.url = 'Please enter a valid URL';
@@ -88,6 +91,7 @@ export const LinkForm: React.FC<LinkFormProps> = ({
     return Object.keys(newErrors).length === 0;
   };
 
+  // Submit the form after validation and pass values up to the parent
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
     if (validateForm()) {
@@ -95,16 +99,18 @@ export const LinkForm: React.FC<LinkFormProps> = ({
     }
   };
 
+  // Update form state for text fields and clear any field-level errors
   const handleInputChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
     const { name, value } = e.target;
     setFormData(prev => ({ ...prev, [name]: value }));
     
-    // Clear error when user starts typing
+    // Clear the error message once the user begins fixing the field
     if (errors[name as keyof LinkFormData]) {
       setErrors(prev => ({ ...prev, [name]: undefined }));
     }
   };
 
+  // Ensuring URL input is formatted with a protocol when the field loses focus
   const formatUrl = (url: string): string => {
     if (url && !url.startsWith('http://') && !url.startsWith('https://')) {
       return `https://${url}`;

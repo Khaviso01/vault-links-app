@@ -10,7 +10,6 @@ import { FolderLinksIcon } from '@hugeicons/core-free-icons'
 import { Search01Icon } from '@hugeicons/core-free-icons'
 import './LinkVault.css';
 
-// Define types directly in this component
 interface Link {
   id: string;
   title: string;
@@ -40,6 +39,7 @@ interface NotificationState {
 }
 
 export const LinkVault: React.FC = () => {
+  // App state for saved links and UI controls
   const [links, setLinks] = useState<Link[]>([]);
   const [searchFilters, setSearchFilters] = useState<SearchFilters>({ query: '', searchBy: 'all' });
   const [activeTag, setActiveTag] = useState<string>('All');
@@ -52,36 +52,35 @@ export const LinkVault: React.FC = () => {
     isVisible: false
   });
 
-  // Load links from localStorage on component mount
+  // Load saved links from localStorage only once when the component mounts
   useEffect(() => {
     const savedLinks = localStorageUtils.getLinks();
     setLinks(savedLinks);
   }, []);
 
-  // Show notification helper
+  // Show a notification with a message and a type
   const showNotification = useCallback((message: string, type: NotificationState['type'] = 'info') => {
     setNotification({ message, type, isVisible: true });
   }, []);
 
-  // Hide notification
+  // Hide the active notification.
   const hideNotification = useCallback(() => {
     setNotification(prev => ({ ...prev, isVisible: false }));
   }, []);
 
-  // Handle search — just stores the current filter criteria; actual
-  // filtering happens in the `filteredLinks` memo below.
+  // Update search filters when the user types or changes the search mode
   const handleSearch = useCallback((filters: SearchFilters) => {
     setSearchFilters(filters);
   }, []);
 
-  // Unique tags across all links, used to render the tabs
+  // Build a sorted list of all unique tags from saved links.
   const uniqueTags = useMemo(() => {
     const tagSet = new Set<string>();
     links.forEach(link => link.tags.forEach(tag => tagSet.add(tag)));
     return Array.from(tagSet).sort((a, b) => a.localeCompare(b));
   }, [links]);
 
-  // Combined result of the active tag filter + the search filter.
+  // Filter links by active tag and search criteria
   const filteredLinks = useMemo(() => {
     let result = links;
 
@@ -172,7 +171,7 @@ export const LinkVault: React.FC = () => {
     }
   };
 
-  // Handle deleting link
+  // Handle deleting a link from both state and localStorage
   const handleDeleteLink = async (id: string) => {
     try {
       const success = localStorageUtils.deleteLink(id);
@@ -187,8 +186,10 @@ export const LinkVault: React.FC = () => {
     }
   };
 
+  // Search query state is kept separately so the input can update live
   const [query, setQuery] = useState('');
 
+  // Keep the search filters in sync with the visible input query
   useEffect(() => {
     handleSearch({
       query,
