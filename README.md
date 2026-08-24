@@ -2,8 +2,6 @@
 
 A personal bookmark manager built with **React + TypeScript**. Save, organize, search, and filter your favorite links from a single, clean interface — no browser lock-in, no third-party CSS frameworks, just React state, hooks, and `localStorage`.
 
-> Task 2 — ReactTS Links Vault
-
 ---
 
 ## App Preview
