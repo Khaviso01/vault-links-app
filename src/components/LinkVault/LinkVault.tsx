@@ -5,9 +5,7 @@ import { LinkCard } from '../../components/LinkCard/LinkCard';
 import { TagTabs } from '../../components/TagTabs/TagTabs';
 import { Notification } from '../../components/Notification/Notification';
 import { HugeiconsIcon } from '@hugeicons/react'
-import { Bookmark02Icon } from '@hugeicons/core-free-icons'
-import { FolderLinksIcon } from '@hugeicons/core-free-icons'
-import { Search01Icon } from '@hugeicons/core-free-icons'
+import { Bookmark02Icon, FileLinkIcon, Search01Icon } from '@hugeicons/core-free-icons'
 import './LinkVault.css';
 
 interface Link {
@@ -234,7 +232,7 @@ export const LinkVault: React.FC = () => {
         <div className="header-content">
           <h1 className="vault-title">
             <span className="vault-icon">
-              <HugeiconsIcon icon={FolderLinksIcon} />
+              <HugeiconsIcon icon={FileLinkIcon} />
             </span>
             Link Vault
           </h1>
