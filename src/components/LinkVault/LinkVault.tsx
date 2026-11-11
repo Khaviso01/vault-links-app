@@ -8,6 +8,7 @@ import { HugeiconsIcon } from '@hugeicons/react'
 import { Bookmark02Icon, FileLinkIcon, Search01Icon } from '@hugeicons/core-free-icons'
 import './LinkVault.css';
 
+// Types for link data, form data, search filters, and notification state
 interface Link {
   id: string;
   title: string;
@@ -82,6 +83,7 @@ export const LinkVault: React.FC = () => {
   const filteredLinks = useMemo(() => {
     let result = links;
 
+    // Filter by active tag if it's not "All"
     if (activeTag !== 'All') {
       result = result.filter(link => link.tags.includes(activeTag));
     }

@@ -146,25 +146,29 @@
 
 
 /* Responsive Design */
+/* Responsive Search Bar */
 @media (max-width: 768px) {
   .search-bar {
     padding: 0.875rem;
     width: 100%;
+    box-sizing: border-box;
   }
-  
+
   .search-input {
+    width: 100%;
+    box-sizing: border-box;
     padding: 0.6875rem 0.875rem 0.6875rem 2.75rem;
     font-size: 0.875rem;
   }
-  
+
   .search-icon {
     left: 0.875rem;
   }
-  
+
   .clear-search-btn {
     right: 0.625rem;
   }
-  
+
   .search-results-info {
     padding: 0.75rem 0.875rem;
     font-size: 0.8125rem;
@@ -172,10 +176,6 @@
 }
 
 @media (max-width: 480px) {
-  .search-bar {
-    padding: 0.75rem;
-    width: 100%;
-  }
   
   .search-input {
     padding: 0.625rem 0.75rem 0.625rem 2.5rem;
@@ -194,6 +194,58 @@
     padding: 0.625rem 0.75rem;
     font-size: 0.75rem;
   }
+}
+
+/* MOBILE: Match Search Input and Add Link Button Widths */
+@media screen and (max-width: 768px) {
+
+  .link-vault {
+    width: 100%;
+    box-sizing: border-box;
+  }
+
+  /* Header and search wrapper */
+  .link-vault-header,
+  .search-bar-container {
+    width: 100%;
+    min-width: 0;
+    box-sizing: border-box;
+  }
+
+  /* Remove inner spacing that makes the search input narrower */
+  .search-bar-container {
+    border: none;
+  }
+
+  .search-bar {
+    width: 100%;
+    padding: 0;
+    box-sizing: border-box;
+  }
+
+  .search-input-container {
+    width: 100%;
+    min-width: 0;
+    flex: 1 1 100%;
+  }
+
+  /* Search input */
+  .search-input {
+    display: block;
+    width: 100%;
+    min-width: 0;
+    box-sizing: border-box;
+  }
+
+  /* Add Link button */
+  .add-link-btn {
+    display: flex;
+    width: 100%;
+    min-width: 0;
+    box-sizing: border-box;
+    justify-content: center;
+  }
+
 }
 
 /* Focus states for accessibility */
@@ -371,11 +423,6 @@
   
   .vault-subtitle {
     font-size: 0.9375rem;
-  }
-  
-  .add-link-btn {
-    width: 100%;
-    justify-content: center;
   }
   
   .links-grid {
